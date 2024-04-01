@@ -9,35 +9,43 @@ for (let i = 1; i <= n; i += 1) {
     words.push(input[i].split(''))
 }
 
+const checkGroup = (word) => {
+    let standardIdx = 0
+    let currIdx = 1
+    let visited = [word[0]]
+    if (word.length === 1) {
+        return true
+    }
+    while (currIdx < word.length) {
+        if (word[currIdx] === word[standardIdx]) {
+            currIdx += 1
+            if (currIdx === word.length) {
+                return true
+            }
+        } else {
+            if (visited.includes(word[currIdx])) {
+                return false
+            } else {
+                standardIdx = currIdx
+                currIdx += 1
+                if (standardIdx === word.length - 1) {
+                    if (visited.includes(word[standardIdx])) {
+                        return false
+                    } else {
+                        return true
+                    }
+                }
+                visited.push(word[standardIdx])
+            }
+        }
+    }
+}
+
 function solution(words) {
     let answer = 0
     for (let i = 0; i < words.length; i += 1) {
-        let visited = [words[i][0]]
-        if (words[i].length === 1) {
+        if (checkGroup(words[i])) {
             answer += 1
-            continue
-        }
-        let currIdx = 1
-        let checkword = words[i][0]
-        let finished = true
-        while (currIdx < words[i].length) {
-            let currentWord = words[i][currIdx]
-            console.log('current arr : ', words[i])
-            console.log('visited : ', visited)
-            console.log('check : ', checkword)
-            console.log('current word : ', currentWord)
-            if (checkword === currentWord) {
-                currIdx += 1
-            } else {
-                if (visited.includes(currentWord)) {
-                    finished = false
-                    break
-                } else {
-                    visited.push(currentWord)
-                    checkword = currentWord
-                    currIdx += 1
-                }
-            }
         }
     }
     console.log(answer)
