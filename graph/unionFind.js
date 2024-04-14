@@ -20,6 +20,7 @@ function unionFindMain() {
         b = getParent(arr, b)
 
         if (a < b) {
+            // 작은 애가 부모 되도록
             arr[b] = a
         } else arr[a] = b
     }
